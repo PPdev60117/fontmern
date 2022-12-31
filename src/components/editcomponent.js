@@ -22,12 +22,7 @@ const Editcomponent=()=>{
     let { slug } = useParams();
     
     useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_API}/blog/${slug}`,
-        {
-            headers:{
-                authorization:`Bearer ${getToken()}`
-            }
-        })
+        axios.get(`${process.env.REACT_APP_API}/blog/${slug}`)
         .then(response=>{
             const {title,content,author,slug} = response.data
             setstate({...state,title,author,slug})
@@ -58,7 +53,12 @@ const Editcomponent=()=>{
         e.preventDefault();
         // console.table({title,content,author})
         // console.log(process.env.REACT_APP_API)
-        axios.put(`${process.env.REACT_APP_API}/blog/edit/${slug}`,{title,content,author})
+        axios.put(`${process.env.REACT_APP_API}/blog/edit/${slug}`,{title,content,author},
+        {
+            headers:{
+                authorization:`Bearer ${getToken()}`
+            }
+        })
         .then((response)=>{
             Swal.fire(
                 'แจ้งเตือน',
